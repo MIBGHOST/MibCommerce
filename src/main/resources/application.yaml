@@ -1,0 +1,19 @@
+
+server:
+  port: 8085
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3305/mibCommerce
+    username: root
+    password: imtheDANGER@218
+  application:
+    name: mibCommerce
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
