@@ -27,9 +27,9 @@ public class Product {
     @Column(name = "PictureUrl")
     private String pictureUrl;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ProductBrandId", referencedColumnName = "PbId")
+    @JoinColumn(name = "ProductBrandId", referencedColumnName = "Id")
     private Brand brand;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ProductTypeId", referencedColumnName = "PtId")
+    @JoinColumn(name = "ProductTypeId", referencedColumnName = "Id")
     private Type type;
 }
