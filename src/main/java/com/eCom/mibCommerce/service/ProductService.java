@@ -1,6 +1,6 @@
-package com.eCom.mibCommerce.sevice;
+package com.eCom.mibCommerce.service;
 
-import com.eCom.mibCommerce.dto.ProductResponseDto;
+import com.eCom.mibCommerce.model.ProductResponseDto;
 
 import java.util.List;
 

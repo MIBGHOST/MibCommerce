@@ -1,4 +1,4 @@
-package com.eCom.mibCommerce.dto;
+package com.eCom.mibCommerce.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

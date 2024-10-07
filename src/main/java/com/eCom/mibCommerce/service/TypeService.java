@@ -1,7 +1,7 @@
-package com.eCom.mibCommerce.sevice;
+package com.eCom.mibCommerce.service;
 
 
-import com.eCom.mibCommerce.dto.TypeResponseDto;
+import com.eCom.mibCommerce.model.TypeResponseDto;
 
 import java.util.List;
 

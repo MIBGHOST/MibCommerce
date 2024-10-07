@@ -1,7 +1,5 @@
-package com.eCom.mibCommerce.dto;
+package com.eCom.mibCommerce.model;
 
-import com.eCom.mibCommerce.entity.Brand;
-import com.eCom.mibCommerce.entity.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +13,7 @@ public class ProductResponseDto {
     private Integer id;
     private String name;
     private String description;
-    private Long prices;
+    private Long price;
     private String pictureUrl;
     private String productBrand;
     private String productType;

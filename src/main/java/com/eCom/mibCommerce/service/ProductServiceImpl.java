@@ -1,6 +1,6 @@
-package com.eCom.mibCommerce.sevice;
+package com.eCom.mibCommerce.service;
 
-import com.eCom.mibCommerce.dto.ProductResponseDto;
+import com.eCom.mibCommerce.model.ProductResponseDto;
 import com.eCom.mibCommerce.entity.Product;
 import com.eCom.mibCommerce.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -36,9 +36,11 @@ public class ProductServiceImpl implements ProductService{
 
         log.info("Fetching all the products!");
         List<Product> productList = productRepository.findAll();
-        return productList.stream()
+        List<ProductResponseDto> response = productList.stream()
                 .map(this::convertToProductResponse)
                 .collect(Collectors.toList());
+        log.info("fetched all the product data!");
+        return response;
     }
 
     private ProductResponseDto convertToProductResponse(Product product) {
@@ -46,7 +48,7 @@ public class ProductServiceImpl implements ProductService{
                 .id(product.getId())
                 .name(product.getName())
                 .description(product.getDescription())
-                .prices(product.getPrices())
+                .price(product.getPrice())
                 .pictureUrl(product.getPictureUrl())
                 .productBrand(product.getBrand().getName())
                 .productType(product.getType().getName())

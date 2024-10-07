@@ -6,18 +6,18 @@ CREATE DATABASE IF NOT EXISTS `mibCommerce`;
 USE `mibCommerce` ;
 
 -- Drop existing tables if they exist
-DROP TABLE IF EXISTS Brand;
-DROP TABLE IF EXISTS Type;
-DROP TABLE IF EXISTS Product;
+DROP TABLE IF EXISTS brand;
+DROP TABLE IF EXISTS type;
+DROP TABLE IF EXISTS product;
 
 -- Create the Brand table
-CREATE TABLE `Brand` (
-                         `Id` INT AUTO_INCREMENT PRIMARY KEY,
-                         `Name` VARCHAR(255) NOT NULL
+CREATE TABLE `brand` (
+                         `id` INT AUTO_INCREMENT PRIMARY KEY,
+                         `name` VARCHAR(255) NOT NULL
 );
 
 -- Insert data into the Brand table
-INSERT INTO Brand (Name) VALUES
+INSERT INTO brand (name) VALUES
                              ('Adidas'),
                              ('ASICS'),
                              ('Victor'),
@@ -27,33 +27,33 @@ INSERT INTO Brand (Name) VALUES
                              ('Babolat');
 
 -- Create the Type table
-CREATE TABLE `Type` (
-                        `Id` INT AUTO_INCREMENT PRIMARY KEY,
-                        `Name` VARCHAR(255) NOT NULL
+CREATE TABLE `type` (
+                        `id` INT AUTO_INCREMENT PRIMARY KEY,
+                        `name` VARCHAR(255) NOT NULL
 );
 
 -- Insert data into the Type table
-INSERT INTO Type (Name) VALUES
+INSERT INTO type (name) VALUES
                             ('Shoes'),
                             ('Rackets'),
                             ('Football'),
                             ('Kit Bags');
 
 -- Create the Product table
-CREATE TABLE `Product` (
-                           `Id` INT AUTO_INCREMENT PRIMARY KEY,
-                           `Name` VARCHAR(255) NOT NULL,
-                           `Description` TEXT,
-                           `Price` DECIMAL(10, 2) NOT NULL,
-                           `PictureUrl` VARCHAR(255),
-                           `ProductTypeId` INT NOT NULL,
-                           `ProductBrandId` INT NOT NULL,
-                           FOREIGN KEY (`ProductTypeId`) REFERENCES `Type`(`Id`),
-                           FOREIGN KEY (`ProductBrandId`) REFERENCES `Brand`(`Id`)
+CREATE TABLE `product` (
+                           `id` INT AUTO_INCREMENT PRIMARY KEY,
+                           `name` VARCHAR(255) NOT NULL,
+                           `description` VARCHAR(500),
+                           `price` DECIMAL(10, 2) NOT NULL,
+                           `picture_url` VARCHAR(255),
+                           `product_type_id` INT NOT NULL,
+                           `product_brand_id` INT NOT NULL,
+                           FOREIGN KEY (`product_type_id`) REFERENCES `type`(`id`),
+                           FOREIGN KEY (`product_brand_id`) REFERENCES `brand`(`id`)
 );
 
 -- Insert data into the Product table
-INSERT INTO Product (Name, Description, Price, PictureUrl, ProductTypeId, ProductBrandId) VALUES
+INSERT INTO product (name, description, price, picture_url, product_type_id, product_brand_id) VALUES
                                                                                               ('Adidas Quick Force Indoor Badminton Shoes', 'Designed for professional as well as amateur badminton players. These indoor shoes are crafted with synthetic upper that provides natural fit, while the EVA midsole provides lightweight cushioning. The shoes can be used for Badminton and Squash', 3500, 'images/Product/adidas_shoe-1.png', 1, 1),
                                                                                               ('Adidas Quick Force Indoor Badminton Shoes', 'Designed for professional as well as amateur badminton players. These indoor shoes are crafted with synthetic upper that provides natural fit, while the EVA midsole provides lightweight cushioning. The shoes can be used for Badminton and Squash', 3375, 'images/Product/adidas_shoe-2.png', 1, 1),
                                                                                               ('Adidas Quick Force Indoor Badminton Shoes', 'Designed for professional as well as amateur badminton players. These indoor shoes are crafted with synthetic upper that provides natural fit, while the EVA midsole provides lightweight cushioning. The shoes can be used for Badminton and Squash', 3375, 'images/Product/adidas_shoe-3.png', 1, 1),

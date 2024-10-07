@@ -1,6 +1,6 @@
-package com.eCom.mibCommerce.sevice;
+package com.eCom.mibCommerce.service;
 
-import com.eCom.mibCommerce.dto.BrandResponseDto;
+import com.eCom.mibCommerce.model.BrandResponseDto;
 import com.eCom.mibCommerce.entity.Brand;
 import com.eCom.mibCommerce.repository.BrandRepository;
 import lombok.extern.slf4j.Slf4j;
