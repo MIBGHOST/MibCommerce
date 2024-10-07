@@ -4,6 +4,8 @@ import com.eCom.mibCommerce.model.ProductResponseDto;
 import com.eCom.mibCommerce.entity.Product;
 import com.eCom.mibCommerce.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,13 +34,12 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<ProductResponseDto> getAllProducts() {
+    public Page<ProductResponseDto> getAllProducts(Pageable pageable) {
 
         log.info("Fetching all the products!");
-        List<Product> productList = productRepository.findAll();
-        List<ProductResponseDto> response = productList.stream()
-                .map(this::convertToProductResponse)
-                .collect(Collectors.toList());
+        Page<Product> productList = productRepository.findAll(pageable);
+        Page<ProductResponseDto> response = productList
+                .map(this::convertToProductResponse);
         log.info("fetched all the product data!");
         return response;
     }

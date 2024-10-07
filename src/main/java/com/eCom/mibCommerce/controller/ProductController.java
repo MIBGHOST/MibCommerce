@@ -6,6 +6,9 @@ import com.eCom.mibCommerce.model.TypeResponseDto;
 import com.eCom.mibCommerce.service.BrandService;
 import com.eCom.mibCommerce.service.ProductService;
 import com.eCom.mibCommerce.service.TypeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +38,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductResponseDto>> getProducts(){
-        List<ProductResponseDto> productsRes = productService.getAllProducts();
+    public ResponseEntity<Page<ProductResponseDto>> getProducts(@PageableDefault(size = 10) Pageable pageable){
+        Page<ProductResponseDto> productsRes = productService.getAllProducts(pageable);
         return new ResponseEntity<>(productsRes, HttpStatus.OK);
     }
 
