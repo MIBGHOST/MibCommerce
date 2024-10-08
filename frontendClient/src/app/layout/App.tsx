@@ -1,4 +1,4 @@
-import Catalog from "../../features/Catalog/catalog.tsx";
+import Catalog from "../../features/catalog/Catalog.tsx";
 
 function App() {
 
