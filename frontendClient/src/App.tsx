@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {useEffect, useState} from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const [products, setProducts] = useState([]);
+    useEffect(()=>{
+        const fetchData = async () =>{
+            try{
+                const response = await fetch("http://localhost:8085/api/products");
+                if(!response.ok){
+                    throw new Error('Failed to fetch products');
+                }
+                const data = await response.json();
+                setProducts(data.content);
+            }catch (error) {
+                console.log('Error fetching data: ', error);
+            }
+        };
+        fetchData();
+    },[]);
+    return(
+        <div>
+            <h1>MibCommerce</h1>
+            {products.map(product => (
+                <div key={product.id}>
+                    <p>{product.name} : ${product.price}</p>
+                    <p>Description: {product.description}</p>
+                    <p>Brand: {product.productBrand} :: Type: {product.productType}</p>
+                </div>
+            ))}
+        </div>
+    )
 }
 
 export default App
