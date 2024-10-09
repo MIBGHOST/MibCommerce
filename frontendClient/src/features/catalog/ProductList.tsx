@@ -1,5 +1,5 @@
 import {Product} from "../../app/model/product.ts";
-import {Grid, Grid2} from "@mui/material";
+import {Grid} from "@mui/material";
 import ProductCard from "./ProductCard.tsx";
 
 interface Props {
@@ -8,13 +8,13 @@ interface Props {
 
 export default function ProductList({products}: Props){
     return(
-        <Grid2 container={true} spacing={4}>
+        <Grid container={true} spacing={2}>
             {products.map((product)=> (
-                <Grid item xs={3} key={product.id}>
+                <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
                     <ProductCard product={product}/>
                 </Grid>
                 )
             )}
-        </Grid2>
+        </Grid>
     );
 }

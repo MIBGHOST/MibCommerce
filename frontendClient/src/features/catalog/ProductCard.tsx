@@ -25,7 +25,7 @@ export default function ProductCard({product}: Props){
     return (
         <Card>
             <CardHeader avatar={
-                <Avatar sx={{bgcolor: 'secondary.main'}}>
+                <Avatar sx={{backgroundColor: 'secondary.main'}}>
                     {product.name.charAt(0).toUpperCase()}
                 </Avatar>
             }

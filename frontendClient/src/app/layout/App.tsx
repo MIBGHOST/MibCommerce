@@ -1,12 +1,17 @@
 import Catalog from "../../features/catalog/Catalog.tsx";
+import {Container, CssBaseline} from "@mui/material";
+import Header from "./Header.tsx";
 
 function App() {
 
     return(
-        <div>
-            <h1>MibCommerce</h1>
-            <Catalog/>
-        </div>
+        <>
+            <CssBaseline />
+            <Header/>
+            <Container>
+                <Catalog/>
+            </Container>
+        </>
     )
 }
 
