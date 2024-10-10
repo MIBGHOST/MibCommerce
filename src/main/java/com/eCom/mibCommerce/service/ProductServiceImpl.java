@@ -1,5 +1,6 @@
 package com.eCom.mibCommerce.service;
 
+import com.eCom.mibCommerce.exceptions.ProductNotFoundException;
 import com.eCom.mibCommerce.model.ProductResponseDto;
 import com.eCom.mibCommerce.entity.Product;
 import com.eCom.mibCommerce.repository.ProductRepository;
@@ -24,7 +25,7 @@ public class ProductServiceImpl implements ProductService{
 
         log.info("Fetching the products by Id: {}", productId);
         Product product = productRepository.findById(productId)
-                .orElseThrow(()->new RuntimeException("product Id not found!"));
+                .orElseThrow(()->new ProductNotFoundException("product Id not found!"));
         ProductResponseDto productResponse = convertToProductResponse(product);
         log.info("Fetched the required product!");
 
