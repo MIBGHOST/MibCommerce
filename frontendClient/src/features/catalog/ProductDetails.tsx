@@ -2,22 +2,15 @@ import {Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Ty
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Product} from "../../app/model/product";
-import axios from "axios";
+import agent from "../../app/api/agent.ts";
+import NotFound from "../../app/errors/NotFound.tsx";
 
 export default function ProductDetails(){
     const {id} = useParams<{id:string}>();
     const [product, setProduct] = useState<Product|null>();
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        axios.get(`http://localhost:8085/api/products/${id}`)
-            .then(response => setProduct(response.data))
-            .catch(e => console.log(e))
-            .finally(()=>setLoading(false));
-    }, [id]);
-    if(loading) return <h3>Loading Products...</h3>
-    if(!product) return <h3>Product not found</h3>
-
     const extractImageName = (item: Product): string | null => {
+
         if(item && item.pictureUrl){
             const parts = item.pictureUrl.split("/");
             if(parts.length > 0){
@@ -33,6 +26,16 @@ export default function ProductDetails(){
             minimumFractionDigits: 2
         }).format(price);
     };
+    useEffect(() => {
+        if (typeof id === "string") {
+            agent.Store.details(parseInt(id))
+                .then(response => setProduct(response))
+                .catch(e => console.log(e))
+                .finally(() => setLoading(false));
+        }
+    }, [id]);
+    if(loading) return <h3>Loading Products...</h3>
+    if(!product) return <NotFound/>
 
     return (
         <Grid container spacing={6}>
