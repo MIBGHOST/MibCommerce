@@ -1,5 +1,6 @@
 import {Product} from "../../app/model/product.ts";
 import {Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography} from "@mui/material";
+import {Link} from "react-router-dom";
 
 interface Props {
     product : Product;
@@ -7,20 +8,21 @@ interface Props {
 
 const extractImageName = (item: Product): string | null => {
     if(item && item.pictureUrl){
-        const parts = item.pictureUrl.split("/");
+        const parts = item.pictureUrl.split('/');
         if(parts.length > 0){
             return parts[parts.length - 1];
         }
     }
     return null;
 };
-const formatPrice = (price: number): string => {
+const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-In', {
         style:'currency',
         currency: 'INR',
         minimumFractionDigits: 2
     }).format(price);
 };
+
 export default function ProductCard({product}: Props){
     return (
         <Card>
@@ -47,7 +49,7 @@ export default function ProductCard({product}: Props){
         </CardContent>
         <CardActions>
             <Button size="small">Add to Cart</Button>
-            <Button size="small">View</Button>
+            <Button component={Link} to={`/store/${product.id}`} size="small">View</Button>
         </CardActions>
         </Card>
     )
