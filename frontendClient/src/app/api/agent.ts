@@ -55,7 +55,7 @@ const Bassket = {
     },
     addItem: async(product: Product, dispatch: Dispatch)=>{
         try{
-            const result = await basketService.addItemsToBasket(product, 1, dispatch);
+            const result = await basketService.addItemToBasket(product, 1, dispatch);
             console.log(result);
             return result;
         }catch(error){
