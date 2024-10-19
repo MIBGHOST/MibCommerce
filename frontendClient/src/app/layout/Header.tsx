@@ -1,6 +1,8 @@
 import {AppBar, Badge, Box, IconButton, List, ListItem, Switch, Toolbar, Typography} from "@mui/material";
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import {ShoppingCart} from "@mui/icons-material";
+import {useAppSelector} from "../store/Store.ts";
+import {useEffect} from "react";
 
 const navLinks = [
     {title: 'Home', path: '/'},
@@ -29,6 +31,13 @@ interface Props {
 }
 
 export default function Header({darkMode, handleThemeChange}: Props) {
+    const {basket} = useAppSelector(state => state.basket);
+    console.log('basket', basket);
+    useEffect(() => {
+        console.log('Basket Item', basket?.items);
+    },[basket]);
+    const itemCount = basket?.items?.reduce((sum, item) => sum+item.quantity,0) || 0;
+
     return (
         <AppBar position='fixed'>
             <Toolbar sx={{
@@ -50,8 +59,8 @@ export default function Header({darkMode, handleThemeChange}: Props) {
                     ))}
                 </List>
                 <Box display='flex' alignItems='center'>
-                    <IconButton size='large' edge='start' color='inherit' sx={{mr:2}}>
-                        <Badge badgeContent='2' color='secondary'>
+                    <IconButton component={Link} to='/basket' size='large' edge='start' color='inherit' sx={{mr:2}}>
+                        <Badge badgeContent={itemCount} color='secondary'>
                             <ShoppingCart/>
                         </Badge>
                     </IconButton>

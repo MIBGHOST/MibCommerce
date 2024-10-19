@@ -1,29 +1,55 @@
 import {Product} from "../../app/model/product.ts";
-import {Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography} from "@mui/material";
+import {
+    Avatar,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    CardMedia,
+    CircularProgress,
+    Typography
+} from "@mui/material";
 import {Link} from "react-router-dom";
+import {useState} from "react";
+import {useAppDispatch} from "../../app/store/Store.ts";
+import agent from "../../app/api/agent.ts";
+import {setBasket} from "../basket/BasketSlice.ts";
+import {LoadingButton} from "@mui/lab";
 
 interface Props {
     product : Product;
 }
 
-const extractImageName = (item: Product): string | null => {
-    if(item && item.pictureUrl){
-        const parts = item.pictureUrl.split('/');
-        if(parts.length > 0){
-            return parts[parts.length - 1];
-        }
-    }
-    return null;
-};
-const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-In', {
-        style:'currency',
-        currency: 'INR',
-        minimumFractionDigits: 2
-    }).format(price);
-};
-
 export default function ProductCard({product}: Props){
+    const extractImageName = (item: Product): string | null => {
+        if(item && item.pictureUrl){
+            const parts = item.pictureUrl.split('/');
+            if(parts.length > 0){
+                return parts[parts.length - 1];
+            }
+        }
+        return null;
+    };
+    const formatPrice = (price: number) => {
+        return new Intl.NumberFormat('en-In', {
+            style:'currency',
+            currency: 'INR',
+            minimumFractionDigits: 2
+        }).format(price);
+    };
+    const [loading, setLoading] = useState(false);
+    const dispatch = useAppDispatch();
+    function addItem() {
+        setLoading(true);
+        agent.Bassket.addItem(product, dispatch)
+            .then(response =>{
+                console.log('new basket: ',response.basket);
+                dispatch(setBasket(response.basket));
+            })
+            .catch(error => console.log(error))
+            .finally(()=>setLoading(false));
+    }
     return (
         <Card>
             <CardHeader avatar={
@@ -48,7 +74,15 @@ export default function ProductCard({product}: Props){
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small">Add to Cart</Button>
+            <LoadingButton
+            loading={loading}
+            onClick={addItem}
+            size="small"
+            startIcon={loading ? <CircularProgress size={20} color='inherit'/> : null}
+
+            >
+                Add To Cart
+            </LoadingButton>
             <Button component={Link} to={`/store/${product.id}`} size="small">View</Button>
         </CardActions>
         </Card>

@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {Product} from "../../app/model/product";
 import agent from "../../app/api/agent.ts";
 import NotFound from "../../app/errors/NotFound.tsx";
+import Spinner from "../../app/layout/Spinner.tsx";
 
 export default function ProductDetails(){
     const {id} = useParams<{id:string}>();
@@ -34,7 +35,7 @@ export default function ProductDetails(){
                 .finally(() => setLoading(false));
         }
     }, [id]);
-    if(loading) return <h3>Loading Products...</h3>
+    if(loading) return <Spinner message='Loading Product...' />
     if(!product) return <NotFound/>
 
     return (
