@@ -10,7 +10,7 @@ import {
     Typography
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {Product} from "../../app/model/product.ts";
+import {Product} from "../../app/model/Product.ts";
 import {useAppSelector} from "../../app/store/Store.ts";
 import {useDispatch} from "react-redux";
 import agent from "../../app/api/agent.ts";

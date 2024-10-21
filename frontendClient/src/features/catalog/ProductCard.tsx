@@ -1,4 +1,4 @@
-import {Product} from "../../app/model/product.ts";
+import {Product} from "../../app/model/Product.ts";
 import {
     Avatar,
     Button,
@@ -58,14 +58,25 @@ export default function ProductCard({product}: Props){
                 </Avatar>
             }
             title={product.name}
-            titleTypographyProps={{sx:{fontWeight: 'bold', color:'primary.main'}}}
+            titleTypographyProps={{sx:{
+                fontWeight: 'bold',
+                color: 'primary.main',
+                whiteSpace: 'normal', // Allow text to wrap
+                overflow: 'hidden', // Prevent overflow
+                textOverflow: 'ellipsis', // Add ellipsis if needed
+                display: '-webkit-box',
+                WebkitLineClamp: 2, // Limit text to 2 lines
+                WebkitBoxOrient: 'vertical',
+                lineHeight: '1.2em', // Adjust line height for better readability
+                maxHeight: '2.4em'   // Set the max height for 2 lines
+            }}}
             />
         <CardMedia
             sx={{ height: 140, backgroundSize: 'contain'}}
             image={"images/products/"+extractImageName(product)}
             title={product.name}
         />
-        <CardContent>
+        <CardContent sx={{ minHeight: '100px' }}>
             <Typography gutterBottom color='secondary' variant="h5">
                 {formatPrice(product.price)}
             </Typography>

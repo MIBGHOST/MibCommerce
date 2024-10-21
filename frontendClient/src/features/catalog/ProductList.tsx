@@ -1,4 +1,4 @@
-import {Product} from "../../app/model/product.ts";
+import {Product} from "../../app/model/Product.ts";
 import {Grid} from "@mui/material";
 import ProductCard from "./ProductCard.tsx";
 

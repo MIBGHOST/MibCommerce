@@ -1,7 +1,7 @@
 import {Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography} from "@mui/material";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {Product} from "../../app/model/product";
+import {Product} from "../../app/model/Product.ts";
 import agent from "../../app/api/agent.ts";
 import NotFound from "../../app/errors/NotFound.tsx";
 import Spinner from "../../app/layout/Spinner.tsx";

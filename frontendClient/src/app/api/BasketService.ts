@@ -1,6 +1,6 @@
 import axios from "axios";
-import {Basket, BasketItem, BasketTotals} from "../model/basket.ts";
-import {Product} from "../model/product.ts";
+import {Basket, BasketItem, BasketTotals} from "../model/Basket.ts";
+import {Product} from "../model/Product.ts";
 import {Dispatch} from "@reduxjs/toolkit";
 import { setBasket } from "../../features/basket/BasketSlice.ts";
 import { createId } from '@paralleldrive/cuid2'
@@ -9,14 +9,14 @@ import { createId } from '@paralleldrive/cuid2'
 class BasketService {
     apiUrl = "http://localhost:8085/api/basket";
 
-    async getBasketFromApi(){
-        try{
-            const response = await axios.get<Basket>(`${this.apiUrl}`);
-            return response.data;
-        }catch(error){
-            throw new Error("Failed to retrieve the basket." + error)
-        }
-    }
+    // async getBasketFromApi(){
+    //     try{
+    //         const response = await axios.get<Basket>(`${this.apiUrl}`);
+    //         return response.data;
+    //     }catch(error){
+    //         throw new Error("Failed to retrieve the basket." + error)
+    //     }
+    // }
 
     async getBasket(){
         try{
@@ -24,7 +24,7 @@ class BasketService {
             if(basket){
                 return JSON.parse(basket) as Basket;
             }else {
-                throw new Error("Basket not found in local storage");
+               console.log("Basket not found in local storage");
             }
         } catch(error){
             throw new Error("Failed to retrieve the basket: " + error);
@@ -39,7 +39,7 @@ class BasketService {
             }
             const itemToAdd = this.mapProductToBasket(item);
             basket.items = this.upsertItems(basket.items, itemToAdd, quantity);
-            this.setBasket(basket, dispatch);
+            await this.setBasket(basket, dispatch);
             //calculate totals
             const totals = this.calculateTotals(basket);
             return {basket, totals};
@@ -54,11 +54,11 @@ class BasketService {
             const itemIndex = basket.items.findIndex((p)=>p.id === itemId);
             if(itemIndex!==-1){
                 basket.items.splice(itemIndex, 1);
-                this.setBasket(basket, dispatch);
+                await this.setBasket(basket, dispatch);
             }
             //check if basket is empty after removing the item
             if(basket.items.length === 0){
-                //clear the the basket from the local storage
+                //clear the basket from the local storage
                 localStorage.removeItem('basket_id');
                 localStorage.removeItem('basket');
             }
@@ -74,7 +74,7 @@ class BasketService {
                 if(item.quantity<1){
                     item.quantity = 1;
                 }
-                this.setBasket(basket, dispatch);
+                await this.setBasket(basket, dispatch);
             }
         }
     }
@@ -85,7 +85,7 @@ class BasketService {
             const item = basket.items.find((p)=>p.id === itemId);
             if(item && item.quantity >1){
                 item.quantity -= quantity;
-                this.setBasket(basket, dispatch);
+                await this.setBasket(basket, dispatch);
             }
         }
     }
@@ -137,13 +137,13 @@ class BasketService {
             productType: item.productType
         };
     }
-    private upsertItems(items: BasketItem[], itemTotAdd: BasketItem, quantity: number): BasketItem[]{
-        const existingItem = items.find(x=>x.id == itemTotAdd.id);
+    private upsertItems(items: BasketItem[], itemToAdd: BasketItem, quantity: number): BasketItem[]{
+        const existingItem = items.find(x=>x.id == itemToAdd.id);
         if(existingItem){
             existingItem.quantity += quantity;
         }else{
-            itemTotAdd.quantity = quantity;
-            items.push(itemTotAdd);
+            itemToAdd.quantity = quantity;
+            items.push(itemToAdd);
         }
         return items;
     }
