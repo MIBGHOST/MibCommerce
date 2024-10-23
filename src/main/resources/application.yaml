@@ -21,3 +21,6 @@ spring:
     redis:
       host: localhost
       port: 6380
+
+cors:
+  allowed-origins: http://localhost:3000
