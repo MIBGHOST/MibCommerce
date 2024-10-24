@@ -117,10 +117,14 @@ const Bassket = {
         }
     }
 }
+const Account = {
+    login: (values: any) => requests.post('auth/login', values)
+}
 
 const agent = {
     Store,
-    Bassket
+    Bassket,
+    Account
 }
 
 export default agent;
